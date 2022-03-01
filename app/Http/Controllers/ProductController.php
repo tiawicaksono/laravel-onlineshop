@@ -16,11 +16,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $resource = ProductResource::collection(Product::paginate(5));
-        return response()->json([
-            'status' => 'success',
-            'data' => $resource
-        ], 200);
+        return ProductResource::collection(Product::paginate(5));
+        // return response()->json([
+        //     'status' => 'success',
+        //     'data' => $resource
+        // ], 200);
     }
 
     /**
@@ -50,8 +50,7 @@ class ProductController extends Controller
         } catch (\Exception $ex) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'product not created',
-                'data' => $ex->getMessage()
+                'message' => $ex->getMessage()
             ], 405);
         }
     }
@@ -89,8 +88,7 @@ class ProductController extends Controller
         } catch (\Exception $ex) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'product can not update',
-                'data' => $ex->getMessage()
+                'message' => $ex->getMessage()
             ], 405);
         }
     }
@@ -119,8 +117,33 @@ class ProductController extends Controller
         } catch (\Exception $ex) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'product can not update',
-                'data' => $ex->getMessage()
+                'message' => $ex->getMessage()
+            ], 405);
+        }
+    }
+
+    /**
+     * Show the specified resource from storage.
+     *
+     * @param  \App\Models\Produtcs  $produtcs
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        try {
+            // return new ProductResource(Product::findOrFail($id));
+            $response = Product::find($id);
+            if ($response) {
+                return new ProductResource($response);
+            }
+            return response()->json([
+                'status' => 'error',
+                'message' => 'product not found '
+            ], 405);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $ex->getMessage()
             ], 405);
         }
     }

@@ -14,7 +14,6 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
         return [
             "id" => $this->id,
             "name" => $this->name,
@@ -23,5 +22,21 @@ class ProductResource extends JsonResource
             "qty" => $this->qty,
             "image" => $this->image
         ];
+
+        // return [
+        //     "data" => $this->collection()
+        // ]
+    }
+
+    public function with($request)
+    {
+        return [
+            "status" => "success"
+        ];
+    }
+
+    public function withResponse($request, $response)
+    {
+        $response->header('Accept', 'application/json');
     }
 }
