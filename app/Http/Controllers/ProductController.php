@@ -15,23 +15,16 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $resource =  Product::orderBy('id', 'desc')->get();
-        // $resource = ProductResource::collection(Product::paginate(5));
-        return $resource;
-        // return response()->json([
-        //     'status' => 'success',
-        //     'data' => $resource
-        // ], 200);
-    }
+        // $resource =  Product::orderBy('id', 'desc')->get();
+        // // $resource = ProductResource::collection(Product::paginate(5));
+        // return $resource;
 
-    public function sorting(Request $request)
-    {
         try {
-            $sortingParam = $request->sorting;
-            $searchCategoryParam = $request->search_category;
-            $searchParam = $request->search_name;
+            $sortingParam = $request->sort;
+            $searchCategoryParam = $request->cat;
+            $searchParam = $request->q;
             $minParam = $request->min;
             $maxParam = $request->max;
 
@@ -58,7 +51,7 @@ class ProductController extends Controller
             if ($minParam != 0 && $maxParam != 0) {
                 $resource = $query->whereBetween($searchCategoryParam, [$minParam, $maxParam]);
             }
-            $resource = $query->get();
+            $resource = $query->paginate(3);
             return $resource;
         } catch (\Exception $ex) {
             return $ex->getMessage();
