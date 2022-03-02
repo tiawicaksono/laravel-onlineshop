@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Produtcs;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ProdutcsPolicy
+class ProductsPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class ProdutcsPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Produtcs  $produtcs
+     * @param  \App\Models\Products  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Produtcs $produtcs)
+    public function view(User $user, Product $product)
     {
         //
     }
@@ -48,10 +48,10 @@ class ProdutcsPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Produtcs  $produtcs
+     * @param  \App\Models\Products  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Produtcs $produtcs)
+    public function update(User $user, Product $product)
     {
         //
     }
@@ -60,10 +60,10 @@ class ProdutcsPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Produtcs  $produtcs
+     * @param  \App\Models\Products  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Produtcs $produtcs)
+    public function delete(User $user, Product $product)
     {
         //
     }
@@ -72,10 +72,10 @@ class ProdutcsPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Produtcs  $produtcs
+     * @param  \App\Models\Products  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Produtcs $produtcs)
+    public function restore(User $user, Product $product)
     {
         //
     }
@@ -84,10 +84,10 @@ class ProdutcsPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Produtcs  $produtcs
+     * @param  \App\Models\Products  $product
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Produtcs $produtcs)
+    public function forceDelete(User $user, Product $product)
     {
         //
     }

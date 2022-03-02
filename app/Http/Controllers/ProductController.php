@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Http\Resources\ProductResource;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -16,17 +17,55 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return ProductResource::collection(Product::paginate(5));
+        $resource =  Product::orderBy('id', 'desc')->get();
+        // $resource = ProductResource::collection(Product::paginate(5));
+        return $resource;
         // return response()->json([
         //     'status' => 'success',
         //     'data' => $resource
         // ], 200);
     }
 
+    public function sorting(Request $request)
+    {
+        try {
+            $sortingParam = $request->sorting;
+            $searchParam = $request->search_name;
+            $minParam = $request->min;
+            $maxParam = $request->max;
+
+            $idOrderBy = "name";
+            $orderBy = "asc";
+            if ($sortingParam == "za") {
+                $orderBy = "desc";
+            }
+            if ($sortingParam == "qty_asc") {
+                $idOrderBy = "qty";
+                $orderBy = "asc";
+            }
+            if ($sortingParam == "qty_desc") {
+                $idOrderBy = "qty";
+                $orderBy = "desc";
+            }
+
+            if (empty($searchParam)) {
+                $resource =  Product::orderBy($idOrderBy, $orderBy)->get();
+            } else {
+                $resource =  Product::orderBy($idOrderBy, $orderBy)
+                    ->where('name', 'ilike', '%' . $searchParam . '%')
+                    ->orWhere('description', 'ilike', '%' . $searchParam . '%')
+                    ->get();
+            }
+            return $resource;
+        } catch (\Exception $ex) {
+            return $ex->getMessage();
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreProdutcsRequest  $request
+     * @param  \App\Http\Requests\StoreProductsRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreProductRequest $request)
@@ -58,8 +97,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateProdutcsRequest  $request
-     * @param  \App\Models\Produtcs  $produtcs
+     * @param  \App\Http\Requests\UpdateProductsRequest  $request
+     * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateProductRequest $request, Product $product)
@@ -96,7 +135,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Produtcs  $produtcs
+     * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -125,7 +164,7 @@ class ProductController extends Controller
     /**
      * Show the specified resource from storage.
      *
-     * @param  \App\Models\Produtcs  $produtcs
+     * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
     public function show($id)
