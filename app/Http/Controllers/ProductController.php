@@ -48,7 +48,7 @@ class ProductController extends Controller
                     ->orWhere('description', 'ilike', '%' . $searchParam . '%');
             }
 
-            if ($minParam != 0 && $maxParam != 0) {
+            if (($minParam != 0 && $maxParam != 0) && $searchCategoryParam != 'name') {
                 $resource = $query->whereBetween($searchCategoryParam, [$minParam, $maxParam]);
             }
             $resource = $query->paginate(3);
@@ -76,6 +76,7 @@ class ProductController extends Controller
             // $fileName = time() . '_' . str_replace(' ', '_', $request->file('image')->getClientOriginalName());
             // $request->file('image')->storeAs('uploads', $fileName);
             // $data['image'] = $fileName;
+            $data['name'] = strtoupper($request->name);
             Product::create($data);
             return response()->json([
                 'status' => 'success',
@@ -97,11 +98,11 @@ class ProductController extends Controller
      * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Request $request, $id)
     {
         try {
-            $id = $product->id;
-            $data = $request->all();
+            dd($request);
+            // $data = $request->all();
             if ($request->file('image')) {
                 $fileName = time() . '_' . str_replace(' ', '_', $request->file('image')->getClientOriginalName());
                 $request->file('image')->storeAs('uploads', $fileName);
@@ -109,7 +110,7 @@ class ProductController extends Controller
             }
             $response = Product::find($id);
             if ($response) {
-                $response->update($data);
+                $response->update($request);
                 return response()->json([
                     'status' => 'success',
                     'message' => 'product updated',
