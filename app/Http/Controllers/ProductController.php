@@ -30,6 +30,7 @@ class ProductController extends Controller
     {
         try {
             $sortingParam = $request->sorting;
+            $searchCategoryParam = $request->search_category;
             $searchParam = $request->search_name;
             $minParam = $request->min;
             $maxParam = $request->max;
@@ -47,15 +48,17 @@ class ProductController extends Controller
                 $idOrderBy = "qty";
                 $orderBy = "desc";
             }
+            $query =  Product::orderBy($idOrderBy, $orderBy);
 
-            if (empty($searchParam)) {
-                $resource =  Product::orderBy($idOrderBy, $orderBy)->get();
-            } else {
-                $resource =  Product::orderBy($idOrderBy, $orderBy)
-                    ->where('name', 'ilike', '%' . $searchParam . '%')
-                    ->orWhere('description', 'ilike', '%' . $searchParam . '%')
-                    ->get();
+            if (!empty($searchParam)) {
+                $resource = $query->where('name', 'ilike', '%' . $searchParam . '%')
+                    ->orWhere('description', 'ilike', '%' . $searchParam . '%');
             }
+
+            if ($minParam != 0 && $maxParam != 0) {
+                $resource = $query->whereBetween($searchCategoryParam, [$minParam, $maxParam]);
+            }
+            $resource = $query->get();
             return $resource;
         } catch (\Exception $ex) {
             return $ex->getMessage();
