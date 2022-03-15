@@ -21,7 +21,8 @@ class ProductFactory extends Factory
             'description' => $this->faker->sentence(3),
             'price' => rand(10000, 20000),
             'qty' => rand(0, 20),
-            'image' => ''
+            'image' => '',
+            'product_category_id' => rand(1, 23)
         ];
     }
 }
