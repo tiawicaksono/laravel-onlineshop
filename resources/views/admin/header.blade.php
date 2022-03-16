@@ -13,7 +13,7 @@
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="{{route('/')}}">Product</a>
               </li>
               <li class="nav-item"><a href="{{route('logout')}}" class="nav-link link-dark px-2">Logout</a></li>
               <li class="nav-item dropdown">

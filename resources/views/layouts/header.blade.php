@@ -10,7 +10,7 @@
         <ul class="nav">
             @auth
             <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::user()->name}}</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Change Password</a></li>
+            <li class="nav-item"><a href="{{route('user')}}" class="nav-link link-dark px-2">Manage User</a></li>
             <li class="nav-item"><a href="{{route('logout')}}" class="nav-link link-dark px-2">Logout</a></li>
             @endauth
             @guest
