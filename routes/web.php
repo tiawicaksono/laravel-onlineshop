@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -18,20 +18,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/formlogin', function () {
-    return view('login');
-});
-Route::post('/prosesregister', [AuthController::class, 'RegisterSignUp'])->name('prosesregister');
-// Route::get('/', 'HomeController@index')->name('create');
-Route::get('/', [HomeController::class, 'index']);
-Route::get('/showproduct/{id}', [HomeController::class, 'showProduct']);
-
-Route::group(['middleware' => ['auth']], function () {
-    Route::resource('roles', RoleController::class);
-    Route::resource('users', UserController::class);
-    Route::resource('products', ProductController::class);
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('showproduct/{id}', 'showProduct');
 });
 
+Route::controller(UserController::class)->group(function () {
+    Route::get('formlogin', 'FormLogin')->name('formlogin');
+    Route::post('prosesregister', 'RegisterSignUp');
+    Route::post('prosessignin', 'SignIn');
+    Route::get('logout', 'Logout');
+});
+
+
+Route::controller(AdminController::class)->group(function () {
+    Route::get('user', 'ShowUser');
+    Route::post('user/show', 'listUser');
+    Route::post('user/approveUser', 'ApproveUser');
+    Route::post('user/approveUserChecked', 'ApproveUserChecked');
+});
 
 // Route::view('/', 'login');
 // Route::post('login', 'LoginController');

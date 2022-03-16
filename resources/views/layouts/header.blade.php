@@ -8,8 +8,22 @@
             <li class="nav-item"><a href="#" class="nav-link link-dark px-2"><i class="bi bi-instagram"></i></a></li>
         </ul>
         <ul class="nav">
-            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Login</a></li>
-            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Sign up</a></li>
+            @auth
+            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::user()->name}}</a></li>
+            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Change Password</a></li>
+            <li class="nav-item"><a href="{{route('logout')}}" class="nav-link link-dark px-2">Logout</a></li>
+            @endauth
+            @guest
+            <li class="nav-item"><a href="{{route('formlogin')}}" class="nav-link link-dark px-2">Login</a></li>
+            @endguest
+            {{-- @if (Auth::check())
+            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">{{Auth::user()->name}}</a></li>
+            <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Change Password</a></li>
+            <li class="nav-item"><a href="{{route('logout')}}" class="nav-link link-dark px-2">Logout</a></li>
+            @else
+            <li class="nav-item"><a href="{{route('formlogin')}}" class="nav-link link-dark px-2">Login</a></li>
+            @endif --}}
+            
         </ul>
     </div>
 </nav>

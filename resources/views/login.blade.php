@@ -4,16 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Scripts -->
     <script src="{{ asset('js/jquery-1.9.1.min.js') }}" defer></script>
-    <script src="{{ asset('js/jquery.fileuploader.min.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/jquery.fileuploader.min.js') }}" defer></script> --}}
     <script src="{{ asset('js/login.js') }}" defer></script>
     {{-- <script src="{{ asset('js/jquery.fileuploader.js') }}" defer></script> --}}
     <!-- Styles -->
     <link href="{{ asset('css/login.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/jquery.fileuploader.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/jquery.fileuploader.css') }}" rel="stylesheet"> --}}
 </head>
     <body>
         <div id="container" class="container">
@@ -23,11 +23,10 @@
                 <div class="col align-items-center flex-col sign-up">
                     <div class="form-wrapper align-items-center">
                         <div class="form sign-up">
-                            <form id="SubmitForm" method="post" enctype="multipart/form-data">
-
+                            <form id="submit_form">
                                 <div class="input-group">
                                     <i class='bx bxs-user'></i>
-                                    <input type="text" placeholder="Username" id="txtUsername" name="txtUsername" required>
+                                    <input type="text" placeholder="Name" id="txtUsername" name="txtUsername" required>
                                 </div>
                                 <div class="input-group">
                                     <i class='bx bx-mail-send'></i>
@@ -35,21 +34,18 @@
                                 </div>
                                 <div class="input-group">
                                     <i class='bx bxs-lock-alt'></i>
-                                    <input type="password" placeholder="Password" id="txtPassword" name="txtPassword" required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
+                                    <input type="password" placeholder="Password" id="txtPassword" name="txtPassword" required>
+                                    {{-- pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" --}}
                                 </div>
                                 <div class="input-group">
                                     <i class='bx bxs-lock-alt'></i>
                                     <input type="password" id="txtConfirmPassword" name="txtConfirmPassword" placeholder="Confirm password" required>
                                 </div>
-                                {{-- <form id="formUpload" class="form-horizontal" name="formUpload" method="post" enctype="multipart/form-data">
-                                    <span id="replace_file"><input type="file" name="files" id="file"></span>
-                                </form> --}}
-                                <input type="file" name="file" placeholder="Choose File" id="file">
-                                <button type="submit" name="btnSignup" id="btnSignup" onclick="clickButtonSignup()">
+                                {{-- <input type="file" name="file" placeholder="Choose File" id="file"> --}}
+                                <button type="submit" name="btnSignup" id="btnSignup">
                                     Sign up
                                 </button>
                             </form>
-                                {{-- <input type="submit" name="btnSignup" value="Sign up" id="btnSignup" class="btn btn-success" /> --}}
                                 <p>
                                     <span>
                                         Already have an account?
@@ -68,17 +64,19 @@
                 <div class="col align-items-center flex-col sign-in">
                     <div class="form-wrapper align-items-center">
                         <div class="form sign-in">
-                            <div class="input-group">
-                                <i class='bx bxs-user'></i>
-                                <input type="text" placeholder="Username">
-                            </div>
-                            <div class="input-group">
-                                <i class='bx bxs-lock-alt'></i>
-                                <input type="password" placeholder="Password">
-                            </div>
-                            <button>
-                                Sign in
-                            </button>
+                            <form id="signin-form">
+                                <div class="input-group">
+                                    <i class='bx bxs-user'></i>
+                                    <input type="text" placeholder="Email" id="sigin_email" name="sigin_email">
+                                </div>
+                                <div class="input-group">
+                                    <i class='bx bxs-lock-alt'></i>
+                                    <input type="password" placeholder="Password" id="sigin_password" name="sigin_password">
+                                </div>
+                                <button type="submit" name="btnSignin" id="btnSignin">
+                                    Sign in
+                                </button>
+                            </form>
                             <p>
                                 <b>
                                     Forgot password?
