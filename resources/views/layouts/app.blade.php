@@ -19,6 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('style')
 </head>
 
 <body>
@@ -48,6 +49,13 @@
                 } 
             });
         }); 
+
+        $(document).ready(function() {
+            $('#myCarousel').carousel({
+                interval: false
+                wrap: false
+            });
+        });
         // DOMContentLoaded  end
     </script>
 </body>
